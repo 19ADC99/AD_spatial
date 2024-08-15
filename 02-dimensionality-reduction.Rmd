@@ -171,15 +171,3 @@ p1 = Seurat::SpatialFeaturePlot(
 p1
 
 ```
-
-
-
-
-
-Random graph, go!!!
-
-```{r, fig.cap="Genes heatmap", fig.height=9, fig.width=16, warning=FALSE, message=FALSE}
-
-Seurat::DimHeatmap(ST011)
-
-```

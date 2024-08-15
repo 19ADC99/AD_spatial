@@ -9,6 +9,9 @@ lapply(up_packages, require, character.only = TRUE)
 # set working directory
 mainDir = "/home/andrea/19ADC99/AD_spatial/"
 knitr::opts_knit$set(root.dir = mainDir)
+
+# load the merged Seurat object
+ST011 = qs::qread("/home/andrea/Dump/AD_spatial/ST011.qsave", nthreads = 4)
 ```
 
 
@@ -55,7 +58,7 @@ First, we import the slides into the list `ST011_list`. Each slide is also trans
 Since the images attached to each sample have all the same name, we also make sure that we change the `orig.ident` of each slide so that the images are not overwritten when we merge the slides together.
 
 
-```{r, echo=TRUE, warning=FALSE, message=FALSE}
+```{r, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
 slides_names = data.frame(
     slide = c("ST01101", "ST01102", "ST01103", "ST01104", "ST01105", "ST01106"),
     slide_name = c("control1", "control2", "control3", "AD1", "AD2", "AD3")
@@ -84,7 +87,7 @@ for(k in 1:6){
 Then, we merge the slides into a single Seurat object `ST011` and set the variable features to the union of the variable features of the individual slides.
 
 
-```{r, echo=TRUE, warning=FALSE, message=FALSE}
+```{r, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
 # merge
 ST011 = merge(x = ST011_list[[1]], y = ST011_list[2:length(ST011_list)])
 Seurat::VariableFeatures(ST011) = c(

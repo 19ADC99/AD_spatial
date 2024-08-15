@@ -1,0 +1,78 @@
+# Differential gene expression analysis
+
+```{r, echo=FALSE, include=FALSE}
+# load required libraries
+up_packages = c("dplyr", "ggplot2", "glmGamPoi", "patchwork", "presto",
+                "qs", "RColorBrewer", "Rfast2", "scales", "scMiko", "Seurat", "SeuratData")
+lapply(up_packages, require, character.only = TRUE)
+
+# set working directory
+mainDir = "/home/andrea/19ADC99/AD_spatial/"
+knitr::opts_knit$set(root.dir = mainDir)
+
+# load the merged Seurat object
+ST011 = qs::qread("/home/andrea/Dump/AD_spatial/ST011.predictions.qsave", nthreads = 6)
+```
+
+
+## Differential gene expression analysis
+
+Let's now focus on identitying markers that can distinguish the different cell types in the dataset. Let's use the function `FindAllMarkers`.
+
+```{r, echo=TRUE, eval=FALSE}
+all_markers = Seurat::FindAllMarkers(
+    ST011,
+    only.pos = TRUE,
+    min.pct = 0.25,
+    logfc.threshold = 0.25
+)
+```
+
+Let's check the top markers for each identified.
+
+```{r, echo=TRUE}
+all_markers %>% group_by(cluster) %>% dplyr::filter(avg_log2FC > 1)
+
+```
+
+Let's visualize the top 6 in a UMAP plot.
+
+```{r, fig.cap="Top 6 markers", fig.height=9,  warning=FALSE, message=FALSE}
+Seurat::FeaturePlot(ST011, features = c("MT1F", "MT1G", "MT1E", "WIF1", "ETNPPL", "SLC14A1"))
+```
+
+Let's visualize the top 10 markers that differentiate between clusters with a heatmap.
+
+```{r, fig.cap="Top markers heatmap", fig.height=9,  warning=FALSE, message=FALSE}
+# get the genes
+top10_genes = all_markers %>%
+    group_by(cluster) %>%
+    dplyr::filter(avg_log2FC > 1) %>%
+    slice_head(n = 10) %>%
+    ungroup()
+
+# plot
+p1 = Seurat::DoHeatmap(ST011, features = top10_genes$gene) + NoLegend()
+p1
+```
+
+We can also check the distribution of the top 10 markers across the different samples and groups.
+
+
+```{r, fig.cap="Dotplot top markers per sample", fig.height=9,  warning=FALSE, message=FALSE}
+Seurat::DotPlot(
+    ST011,
+    features = unique(top10_genes$gene),
+    split.by = "orig.ident",
+    cols = c("indianred", "brown2", "firebrick", "#BCD2EE", "lightskyblue3", "dodgerblue")
+) + RotatedAxis()
+```
+
+```{r, fig.cap="Dotplot top markers per cluster", fig.height=9,  warning=FALSE, message=FALSE}
+Seurat::DotPlot(
+    ST011,
+    features = unique(top10_genes$gene),
+    split.by = "seurat_clusters",
+    cols = c(brewer.pal(8, "Set2"), brewer.pal(8, "Dark2"))
+) + RotatedAxis()
+```
