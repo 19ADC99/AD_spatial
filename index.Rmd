@@ -6,7 +6,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-cover-image: "images/cover.png"
+#cover-image: "images/cover.png"
 description: |
   Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics
 link-citations: yes
@@ -18,6 +18,4 @@ github-repo: 19ADC99/AD_spatial
 
 Human middle temporal gyrus (MTG) is a vulnerable brain region in early Alzheimer’s disease (AD)[^1], but little is known about the molecular mechanisms underlying this regional vulnerability. Here we utilize the 10 × Visium platform to define the spatial transcriptomic profile in both AD and control (CT) MTG. We identify unique marker genes for cortical layers and the white matter, and layer-specific differentially expressed genes (DEGs) in human AD compared to CT. Deconvolution of the Visium spots showcases the significant difference in particular cell types among cortical layers and the white matter. Gene co-expression analyses reveal eight gene modules, four of which have significantly altered co-expression patterns in the presence of AD pathology. 
 
-![Adult human brain.](images/cover.png)
 
-[^1] figure source: https://github.com/linnarsson-lab/adult-human-brain
