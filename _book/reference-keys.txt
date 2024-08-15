@@ -1,9 +1,11 @@
+fig:unnamed-chunk-4
 fig:nice-fig
 tab:nice-tab
 eq:binom
 thm:tri
-hello-bookdown
-a-section
+import-slides-exploration-and-merge
+import-the-first-slide
+import-all-slides-and-merge
 cross
 chapters-and-sub-chapters
 captioned-figures-and-tables
