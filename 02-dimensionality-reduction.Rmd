@@ -161,7 +161,7 @@ gc()
 
 Let's plot the top 3 markers identified
 
-```{r, fig.cap="Top 3 spatially variable markers", fig.height=9,  warning=FALSE, message=FALSE}
+```{r, fig.cap="Top 3 spatially variable markers", fig.height=9, width=36, warning=FALSE, message=FALSE}
 de_markers = Seurat::FindMarkers(ST011, ident.1 = 2, ident.2 = 11)
 p1 = Seurat::SpatialFeaturePlot(
     ST011,
@@ -169,5 +169,17 @@ p1 = Seurat::SpatialFeaturePlot(
     pt.size.factor = 2000, ncol = 6
 )
 p1
+
+```
+
+
+
+
+
+Random graph, go!!!
+
+```{r, fig.cap="Genes heatmap", fig.height=9, fig.width=16, warning=FALSE, message=FALSE}
+
+Seurat::DimHeatmap(allen_MTG_reference)
 
 ```

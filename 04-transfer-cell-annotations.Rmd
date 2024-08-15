@@ -20,3 +20,14 @@ allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.
 
 First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.
 
+
+allen_MTG_reference[["RNA"]]$counts = allen_MTG_reference[["RNA"]]$data
+allen_MTG_reference = Seurat::SCTransform(allen_MTG_reference, verbose = TRUE)
+
+anchors = Seurat::FindTransferAnchors(
+    reference = allen_MTG_reference,
+    query = ST011,
+    normalization.method = "SCT",
+    recompute.residuals = FALSE
+)
+
