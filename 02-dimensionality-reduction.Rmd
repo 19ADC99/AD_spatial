@@ -154,15 +154,15 @@ Seurat::SpatialFeaturePlot(ST011, features = c("DEPP1", "SERPINA3"), pt.size.fac
 We can also compute the most spatially variable genes across the slides using the `FindMarkers` function in Seurat.
 We can choose cell groups 2 and group 11 to see which markers are more differentially expressed across these two groups.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 ST011 = Seurat::PrepSCTFindMarkers(ST011)
 gc()
-de_markers = Seurat::FindMarkers(ST011, ident.1 = 2, ident.2 = 11)
 ```
 
 Let's plot the top 3 markers identified
 
 ```{r, fig.cap="Top 3 spatially variable markers", fig.height=9,  warning=FALSE, message=FALSE}
+de_markers = Seurat::FindMarkers(ST011, ident.1 = 2, ident.2 = 11)
 p1 = Seurat::SpatialFeaturePlot(
     ST011,
     features = rownames(de_markers)[1:3], alpha = c(0.1, 1),

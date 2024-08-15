@@ -85,7 +85,7 @@ patchwork::wrap_plots(p1, p2, ncol = 2)
 
 Let's see how these regions and cell types are distributed in the UMAP space.
 
-```{r, fig.cap="UMAP Allen MTG reference", fig.height=9,  warning=FALSE, message=FALSE}
+```{r, fig.cap="UMAP Allen MTG reference", fig.height=9, width=9, warning=FALSE, message=FALSE}
 # Visualize UMAPs of region and cell type of the Atlas
 p1 = Seurat::DimPlot(allen_MTG_reference, group.by = "ROIGroupFine", label = FALSE, raster = FALSE) +
     scale_color_manual(values = c(brewer.pal(8, "Set2"), brewer.pal(8, "Dark2")))

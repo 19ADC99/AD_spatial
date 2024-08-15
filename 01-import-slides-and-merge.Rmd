@@ -55,7 +55,7 @@ First, we import the slides into the list `ST011_list`. Each slide is also trans
 Since the images attached to each sample have all the same name, we also make sure that we change the `orig.ident` of each slide so that the images are not overwritten when we merge the slides together.
 
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 slides_names = data.frame(
     slide = c("ST01101", "ST01102", "ST01103", "ST01104", "ST01105", "ST01106"),
     slide_name = c("control1", "control2", "control3", "AD1", "AD2", "AD3")
