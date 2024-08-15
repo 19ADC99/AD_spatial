@@ -19,7 +19,11 @@ ST011 = qs::qread("/home/andrea/Dump/AD_spatial/ST011.predictions.qsave", nthrea
 
 Let's now focus on identitying markers that can distinguish the different cell types in the dataset. Let's use the function `FindAllMarkers`.
 
-```{r, echo=TRUE, eval=FALSE}
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+# must switch back to SCT to identify variable markers
+Seurat::DefaultAssay(ST011) = "SCT"
+
+# find markers
 all_markers = Seurat::FindAllMarkers(
     ST011,
     only.pos = TRUE,
@@ -37,13 +41,13 @@ all_markers %>% group_by(cluster) %>% dplyr::filter(avg_log2FC > 1)
 
 Let's visualize the top 6 in a UMAP plot.
 
-```{r, fig.cap="Top 6 markers", fig.height=9,  warning=FALSE, message=FALSE}
+```{r, fig.cap="Top 6 markers", fig.height=9, warning=FALSE, message=FALSE}
 Seurat::FeaturePlot(ST011, features = c("MT1F", "MT1G", "MT1E", "WIF1", "ETNPPL", "SLC14A1"))
 ```
 
 Let's visualize the top 10 markers that differentiate between clusters with a heatmap.
 
-```{r, fig.cap="Top markers heatmap", fig.height=9,  warning=FALSE, message=FALSE}
+```{r, fig.cap="Top markers heatmap", fig.height=9, warning=FALSE, message=FALSE}
 # get the genes
 top10_genes = all_markers %>%
     group_by(cluster) %>%

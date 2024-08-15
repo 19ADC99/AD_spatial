@@ -17,7 +17,7 @@ options(future.globals.maxSize= 74877906944)
 ```
 
 
-# Transfer cell annotations from the Allen MTG reference to the AD slides.
+## Transfer cell annotations from the Allen MTG reference to the AD slides.
 
 First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.
 We need to add SCT normalization to the Allen MTG reference, and then find the anchors. Since `SCTransform` requires the `counts` slot to be filled, we need to copy the `data` slot to the `counts` slot.  
@@ -105,7 +105,7 @@ SpatialFeaturePlot(
 ```{r, fig.cap="Predicted oligodendrocytes", fig.height=9, width=9, warning=FALSE, message=FALSE}
 SpatialFeaturePlot(
     ST011,
-    features = "oligodendrocytes",
+    features = "oligodendrocyte",
     pt.size.factor = 1500,
     ncol = 3,
     crop = TRUE
