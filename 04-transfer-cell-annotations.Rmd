@@ -1,0 +1,22 @@
+# Transfer cell annotations
+
+```{r, echo=FALSE, include=FALSE}
+# load required libraries
+up_packages = c("dplyr", "ggplot2", "glmGamPoi", "patchwork", "presto",
+                "qs", "RColorBrewer", "Rfast2", "scales", "Seurat", "SeuratData")
+lapply(up_packages, require, character.only = TRUE)
+
+# set working directory
+mainDir = "/home/andrea/19ADC99/AD_spatial/"
+knitr::opts_knit$set(root.dir = mainDir)
+
+# load the merged Seurat object
+ST011 = readRDS("/home/andrea/Dump/AD_spatial/ST011.rds")
+allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.rds")
+```
+
+
+# Transfer cell annotations from the Allen MTG reference to the AD slides.
+
+First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.
+

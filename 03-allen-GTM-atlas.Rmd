@@ -1,12 +1,97 @@
-# Parts
+# Load and Prepare the Allen GTM Atlas
 
-You can add parts to organize one or more book chapters together. Parts can be inserted at the top of an .Rmd file, before the first-level chapter heading in that same file. 
+```{r, echo=FALSE, include=FALSE}
+# load required libraries
+up_packages = c("dplyr", "ggplot2", "glmGamPoi", "patchwork", "presto",
+                "qs", "RColorBrewer", "Rfast2", "scales", "Seurat", "SeuratData")
+lapply(up_packages, require, character.only = TRUE)
 
-Add a numbered part: `# (PART) Act one {-}` (followed by `# A chapter`)
+# set working directory
+mainDir = "/home/andrea/19ADC99/AD_spatial/"
+knitr::opts_knit$set(root.dir = mainDir)
 
-Add an unnumbered part: `# (PART\*) Act one {-}` (followed by `# A chapter`)
+# load the merged Seurat object
+allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.rds")
+```
 
-Add an appendix as a special kind of un-numbered part: `# (APPENDIX) Other stuff {-}` (followed by `# A chapter`). Chapters in an appendix are prepended with letters instead of numbers.
+
+The full Allen Brain Cell Atlas is an incredible resource, but it is so large that it is very challenging to use it on a laptop. I have tried to download and downsapled it to just 10% of the amount of cells it contains. I had to reserve ~300Gb of my harddrive as extra swap not to run out of RAM. In the end, the process was so cumbersome, that I had to recline to a more manageable asset. Well, to be fair the Atlas comes as an anndata file, and while istalling the right libraries in python I broke my hd5f libraries in R, so I could not transform anndata to Seurat after downsampling, and so I have looked for a Seurat-compatible colution :/.
+
+I have retrieve the MTG reference from the Allen Brain Cell Atlas from the [Seattle Alzheimer's Disease Brain Cell Atlas (SEA-AD)](https://portal.brain-map.org/atlases-and-data/rnaseq/human-mtg-10x_sea-ad). The Seurat object provided is much more maneageable (~4.4 Gb) and it contains targeted information to annotate our slides.
+
+Let's import the Atlas and run some dimensionality reduction on it, since the UMAP is available but not the PCA.
+
+```{r, echo=FALSE, eval=FALSE}
+# import
+allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.rds")
+
+# it comes without PCA, so we run it
+allen_MTG_reference = Seurat::FindVariableFeatures(allen_MTG_reference, selection.method = "vst", nfeatures = 2000)
+allen_MTG_reference = Seurat::ScaleData(allen_MTG_reference)
+allen_MTG_reference = Seurat::RunPCA(allen_MTG_reference, verbose = TRUE)
+allen_MTG_reference = Seurat::FindNeighbors(allen_MTG_reference, dims = 1:30)
+allen_MTG_reference = Seurat::FindClusters(allen_MTG_reference, verbose = TRUE)
+```
+The clustering process identifies 127 communities, of them 90 are flagged as singletons resulting in 37 final cell clusters.
+
+Let's check the Atlas content.
+
+```{r, echo=TRUE}
+allen_MTG_reference
+```
+
+We can also plot number of cells per Region of Interest and for each cell type.
+
+```{r, fig.cap="Number of cells per Region of Interest", fig.height=9,  warning=FALSE, message=FALSE}
+
+# visualize Atlas frequencies breakdown
+p1 = ggplot(as.data.frame(t(table(allen_MTG_reference$ROIGroupFine))), aes(x = Var2, y = Freq)) +
+    geom_bar(aes(fill = Var2), color = "grey35", stat = "identity") +
+    geom_text(aes(label = Freq), size = 8, hjust = 1.1) +
+    scale_fill_manual(values = c(brewer.pal(8, "Set2"), brewer.pal(8, "Dark2"))) +
+    scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+                  labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+    labs(title = "Region", y = "Number of cells") +
+    coord_flip() +
+    theme(plot.title = element_text(size = 24, hjust = 0.5),
+          axis.title.x = element_text(size = 18),
+          axis.title.y = element_blank(),
+          axis.text = element_text(size = 14),
+          panel.background = element_rect(fill = NA, colour = "black"),
+          panel.grid.major.x = element_line(colour = "grey"),
+          panel.grid.major.y = element_blank(),
+          legend.position = "none")
+
+p2 = ggplot(as.data.frame(t(table(allen_MTG_reference$cell_type))), aes(x = Var2, y = Freq)) +
+    geom_bar(aes(fill = Var2), color = "grey35", stat = "identity") +
+    geom_text(aes(label = Freq), size = 8, hjust = 1.1) +
+    scale_fill_manual(values = c(brewer.pal(11, "Set3"))) +
+    scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
+                  labels = scales::trans_format("log10", scales::math_format(10^.x))) +
+    labs(title = "Cell type", y = "Number of cells") +
+    coord_flip() +
+    theme(plot.title = element_text(size = 24, hjust = 0.5),
+          axis.title.x = element_text(size = 18),
+          axis.title.y = element_blank(),
+          axis.text = element_text(size = 14),
+          panel.background = element_rect(fill = NA, colour = "black"),
+          panel.grid.major.x = element_line(colour = "grey"),
+          panel.grid.major.y = element_blank(),
+          legend.position = "none")
+
+patchwork::wrap_plots(p1, p2, ncol = 2)
+```
 
 
+Let's see how these regions and cell types are distributed in the UMAP space.
 
+```{r, fig.cap="UMAP Allen MTG reference", fig.height=9,  warning=FALSE, message=FALSE}
+# Visualize UMAPs of region and cell type of the Atlas
+p1 = Seurat::DimPlot(allen_MTG_reference, group.by = "ROIGroupFine", label = FALSE, raster = FALSE) +
+    scale_color_manual(values = c(brewer.pal(8, "Set2"), brewer.pal(8, "Dark2")))
+p2 = Seurat::DimPlot(allen_MTG_reference, group.by = "cell_type", label = FALSE, raster = FALSE) +
+    scale_color_manual(values = c(brewer.pal(11, "Set3")))
+patchwork::wrap_plots(p1, p2, ncol = 2)
+```
+
+In the next chapter we will use the Allen MTG reference to annotate our slides and perform a spatial deconvolution to estimate the cell type composition of the Visium spots.

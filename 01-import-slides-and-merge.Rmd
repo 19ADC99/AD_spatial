@@ -40,7 +40,7 @@ Let's plot the expression of the genes next to the gene counts for each voxel in
 
 ```{r, fig.cap="Slide ST01101 overview", fig.height=9,  warning=FALSE, message=FALSE}
 
-plot1 = Seurat::VlnPlot(ST01101, features = c("nCount_Spatial"))  + NoLegend()
+plot1 = Seurat::VlnPlot(ST01101, features = c("nCount_Spatial")) + NoLegend()
 plot2 = Seurat::SpatialFeaturePlot(ST01101, features = "nCount_Spatial", pt.size.factor = 0)
 plot3 = Seurat::SpatialFeaturePlot(ST01101, features = "nCount_Spatial", pt.size.factor = 2000)
 patchwork::wrap_plots(plot1, patchwork::wrap_plots(plot2, plot3, ncol = 1), ncol = 2)
@@ -55,7 +55,7 @@ First, we import the slides into the list `ST011_list`. Each slide is also trans
 Since the images attached to each sample have all the same name, we also make sure that we change the `orig.ident` of each slide so that the images are not overwritten when we merge the slides together.
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 slides_names = data.frame(
     slide = c("ST01101", "ST01102", "ST01103", "ST01104", "ST01105", "ST01106"),
     slide_name = c("control1", "control2", "control3", "AD1", "AD2", "AD3")
@@ -99,10 +99,37 @@ names(ST011@images) = slides_names$slide_name
 gc()
 ```
 
-Now we have a single Seurat object `ST011` containing all the slides. We can proceed with the Dimensionality Reduction steps.
 
 ```{r, echo=TRUE}
 
 ST011
 
 ```
+
+
+We can now plot the expression across clusters splitted by slide.
+
+```{r, fig.cap="Merged slides overview - Violin Plot", fig.height=9,  warning=FALSE, message=FALSE}
+
+# expression QC
+Seurat::VlnPlot(ST011, features = c("nCount_Spatial"), split.by = "orig.ident") +
+    scale_fill_manual(values = c("indianred", "brown2", "firebrick",
+                                 "#BCD2EE", "lightskyblue3", "dodgerblue")) +
+    ggplot2::theme(legend.position = c(0.9, 0.9))
+
+```
+
+We can immediatly notice how the control group have an higher cell counts and expression values for group 2 and 5, while the AD slides seems encriched in cells from group 9. Group 11 appear only in an AD slide.
+
+Let's check as well how the gene counts are distributed across the six slides.
+
+```{r, fig.cap="Merged slides overview - Slides expression", fig.height=9,  warning=FALSE, message=FALSE}
+
+# expression QC
+plot1 = Seurat::SpatialFeaturePlot(ST011, features = "nCount_Spatial", pt.size.factor = 0)
+plot2 = Seurat::SpatialFeaturePlot(ST011, features = "nCount_Spatial", pt.size.factor = 2000)
+patchwork::wrap_plots(plot1, plot2, ncol = 1)
+
+```
+
+Now we have a single Seurat object `ST011` containing all the slides. We can proceed with the Dimensionality Reduction steps.

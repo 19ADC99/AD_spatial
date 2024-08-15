@@ -1,34 +1,173 @@
-# Cross-references {#cross}
+# Dimensionality Reduction and Exploration of the Merged Slides
 
-Cross-references make it easier for your readers to find and link to elements in your book.
+```{r, echo=FALSE, include=FALSE}
+# load required libraries
+up_packages = c("dplyr", "ggplot2", "glmGamPoi", "patchwork", "presto",
+                "qs", "RColorBrewer", "Rfast2", "scales", "Seurat", "SeuratData")
+lapply(up_packages, require, character.only = TRUE)
 
-## Chapters and sub-chapters
+# set working directory
+mainDir = "/home/andrea/19ADC99/AD_spatial/"
+knitr::opts_knit$set(root.dir = mainDir)
 
-There are two steps to cross-reference any heading:
-
-1. Label the heading: `# Hello world {#nice-label}`. 
-    - Leave the label off if you like the automated heading generated based on your heading title: for example, `# Hello world` = `# Hello world {#hello-world}`.
-    - To label an un-numbered heading, use: `# Hello world {-#nice-label}` or `{# Hello world .unnumbered}`.
-
-1. Next, reference the labeled heading anywhere in the text using `\@ref(nice-label)`; for example, please see Chapter \@ref(cross). 
-    - If you prefer text as the link instead of a numbered reference use: [any text you want can go here](#cross).
-
-## Captioned figures and tables
-
-Figures and tables *with captions* can also be cross-referenced from elsewhere in your book using `\@ref(fig:chunk-label)` and `\@ref(tab:chunk-label)`, respectively.
-
-See Figure \@ref(fig:nice-fig).
-
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center', fig.alt='Plot with connected points showing that vapor pressure of mercury increases exponentially as temperature increases.'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
+# load the merged Seurat object
+ST011 = readRDS("/home/andrea/Dump/AD_spatial/ST011.rds")
 ```
 
-Don't miss Table \@ref(tab:nice-tab).
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(pressure, 10), caption = 'Here is a nice table!',
-  booktabs = TRUE
+## Dimensionality Reduction
+
+Let's run PCA and UMAP on the merged slides to explore the data structure and relationships between the mapped voxels.
+
+```{r, echo=FALSE}
+
+ST011 = Seurat::RunPCA(ST011, verbose = TRUE)
+ST011 = Seurat::FindNeighbors(ST011, dims = 1:30)
+ST011 = Seurat::FindClusters(ST011, verbose = TRUE)
+ST011 = Seurat::RunUMAP(ST011, dims = 1:30)
+
+```
+
+Let's plot the UMAP embedding of the voxels colored by the cluster assignment.
+
+```{r, fig.cap="UMAP merged slides", fig.height=9,  warning=FALSE, message=FALSE}
+
+# UMAP plot
+plot1 = Seurat::DimPlot(ST011, reduction = "umap", group.by = c("ident"), label = TRUE)
+plot2 = Seurat::DimPlot(ST011, reduction = "umap", group.by = c("orig.ident"), cols = c("indianred", "brown2", "firebrick", "#BCD2EE", "lightskyblue3", "dodgerblue"), label = FALSE)
+patchwork::wrap_plots(plot1, plot2, ncol = 2)
+
+```
+
+Indeed, cell groups 9, 10 and 11 seems enriched in the AD slides. There is also an evident separation between control and AD cells in groups 2 and 5.
+
+Let's now overlay the Groups over the slides.
+
+```{r, fig.cap="Slides VS cell groups", fig.height=9,  warning=FALSE, message=FALSE}
+
+# Visualize Layers
+Seurat::SpatialDimPlot(ST011, pt.size.factor = 2000, label = TRUE, label.size = 3, ncol = 3)
+
+```
+
+Let's confirm that cell groups 9, 10 and 11 are indeed enriched in the AD slides by highlighting these cells over the slides.
+
+```{r, fig.cap="Cell Group 9 distribution", fig.height=9,  warning=FALSE, message=FALSE}
+
+# group 9
+p1 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[1],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+p2 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[2],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+p3 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[3],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+p4 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[4],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+p5 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[5],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+p6 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[6],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 9),
+                            pt.size.factor = 2000) + NoLegend()
+patchwork::wrap_plots(p1, p2, p3, p4, p5, p6, ncol = 3)
+```
+
+
+```{r, fig.cap="Cell Group 10 distribution", fig.height=9,  warning=FALSE, message=FALSE}
+# group 10
+p1 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[1],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+p2 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[2],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+p3 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[3],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+p4 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[4],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+p5 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[5],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+p6 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[6],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 10),
+                            pt.size.factor = 2000) + NoLegend()
+patchwork::wrap_plots(p1, p2, p3, p4, p5, p6, ncol = 3)
+
+```
+
+
+```{r, fig.cap="Cell Group 11 distribution", fig.height=9,  warning=FALSE, message=FALSE}
+
+# group 11
+p1 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[1],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+p2 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[2],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+p3 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[3],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+p4 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[4],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+p5 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[5],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+p6 = Seurat::SpatialDimPlot(ST011, images = names(ST011@images)[6],
+                            cells.highlight = CellsByIdentities(object = ST011, idents = 11),
+                            pt.size.factor = 2000) + NoLegend()
+patchwork::wrap_plots(p1, p2, p3, p4, p5, p6, ncol = 3)
+
+```
+
+
+
+
+[Wang et al.](https://www.nature.com/articles/s41467-024-49133-z) reports as most Differentially Expressed genes in AD vs control for these slides MTRNR2L1, MTRNR2L6, SERPINA3 and DEPP1.
+Let's see the expression of these genes across the slides.
+
+```{r, fig.cap="MTRNR2L1 and MTRNR2L6 expression", fig.height=9,  warning=FALSE, message=FALSE}
+
+# MTRNR2L1 and MTRNR2L6 expression
+Seurat::SpatialFeaturePlot(ST011, features = c("MTRNR2L1", "MTRNR2L6"), pt.size.factor = 2000)
+
+```
+
+
+```{r, fig.cap="DEPP1 and SERPINA3 expression", fig.height=9,  warning=FALSE, message=FALSE}
+
+# DEPP1 and SERPINA3 expression
+Seurat::SpatialFeaturePlot(ST011, features = c("DEPP1", "SERPINA3"), pt.size.factor = 2000)
+
+```
+
+
+## Identification of Spatially Variable Genes across groups
+
+We can also compute the most spatially variable genes across the slides using the `FindMarkers` function in Seurat.
+We can choose cell groups 2 and group 11 to see which markers are more differentially expressed across these two groups.
+
+```{r, echo=FALSE}
+ST011 = Seurat::PrepSCTFindMarkers(ST011)
+gc()
+de_markers = Seurat::FindMarkers(ST011, ident.1 = 2, ident.2 = 11)
+```
+
+Let's plot the top 3 markers identified
+
+```{r, fig.cap="Top 3 spatially variable markers", fig.height=9,  warning=FALSE, message=FALSE}
+p1 = Seurat::SpatialFeaturePlot(
+    ST011,
+    features = rownames(de_markers)[1:3], alpha = c(0.1, 1),
+    pt.size.factor = 2000, ncol = 6
 )
+p1
+
 ```
