@@ -8,7 +8,7 @@ I have therefore decided to reprocess the data Chen et al. 2022 [^1], following 
 
 ## Rendering
 
-deployed at: https://19adc99.github.io/ad-spatial/
+deployed at: https://19adc99.github.io/ad_spatial/
 
 
 
