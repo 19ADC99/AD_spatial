@@ -11,7 +11,7 @@ mainDir = "/home/andrea/19ADC99/AD_spatial/"
 knitr::opts_knit$set(root.dir = mainDir)
 
 # load the merged Seurat object
-ST011 = readRDS("/home/andrea/Dump/AD_spatial/ST011.rds")
+ST011 = qs::qread("/home/andrea/Dump/AD_spatial/ST011.qsave", nthreads = 4)
 ```
 
 
@@ -19,7 +19,7 @@ ST011 = readRDS("/home/andrea/Dump/AD_spatial/ST011.rds")
 
 Let's run PCA and UMAP on the merged slides to explore the data structure and relationships between the mapped voxels.
 
-```{r, echo=FALSE}
+```{r, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
 
 ST011 = Seurat::RunPCA(ST011, verbose = TRUE)
 ST011 = Seurat::FindNeighbors(ST011, dims = 1:30)
@@ -154,7 +154,7 @@ Seurat::SpatialFeaturePlot(ST011, features = c("DEPP1", "SERPINA3"), pt.size.fac
 We can also compute the most spatially variable genes across the slides using the `FindMarkers` function in Seurat.
 We can choose cell groups 2 and group 11 to see which markers are more differentially expressed across these two groups.
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
 ST011 = Seurat::PrepSCTFindMarkers(ST011)
 gc()
 ```
@@ -180,6 +180,6 @@ Random graph, go!!!
 
 ```{r, fig.cap="Genes heatmap", fig.height=9, fig.width=16, warning=FALSE, message=FALSE}
 
-Seurat::DimHeatmap(allen_MTG_reference)
+Seurat::DimHeatmap(ST011)
 
 ```

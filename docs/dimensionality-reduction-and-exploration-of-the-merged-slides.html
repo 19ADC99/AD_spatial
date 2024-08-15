@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 2 Dimensionality Reduction and Exploration of the Merged Slides | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="/images/cover.png" />
+  
   <meta property="og:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
   <meta name="github-repo" content="19ADC99/AD_spatial" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 2 Dimensionality Reduction and Exploration of the Merged Slides | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   
   <meta name="twitter:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
-  <meta name="twitter:image" content="/images/cover.png" />
+  
 
 <meta name="author" content="Andrea Del Cortona" />
 
@@ -154,19 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="load-and-prepare-the-allen-gtm-atlas.html"><a href="load-and-prepare-the-allen-gtm-atlas.html"><i class="fa fa-check"></i><b>3</b> Load and Prepare the Allen GTM Atlas</a></li>
 <li class="chapter" data-level="4" data-path="transfer-cell-annotations.html"><a href="transfer-cell-annotations.html"><i class="fa fa-check"></i><b>4</b> Transfer cell annotations</a></li>
 <li class="chapter" data-level="5" data-path="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><i class="fa fa-check"></i><b>5</b> Transfer cell annotations from the Allen MTG reference to the AD slides.</a></li>
-<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
-<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
-<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
-<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
-<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -192,182 +179,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="dimensionality-reduction" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Dimensionality Reduction<a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#dimensionality-reduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s run PCA and UMAP on the merged slides to explore the data structure and relationships between the mapped voxels.</p>
-<pre><code>## Warning in PrepDR(object = object, features = features, verbose = verbose): The
-## following 6095 features requested have not been scaled (running reduction
-## without them): APLNR, RELN, ACKR1, S100A8, AQP1, SFRP2, TIMP1, MT-ND1, S100A9,
-## AL031056.1, MGP, CAPS, AEBP1, NDRG1, TJP2, TNFRSF6B, CD44, ERMN, SNORC, MT-ND2,
-## ADAMTS4, HAMP, CDK2AP1, PLLP, DAAM2, CD99, NKX6-2, LAMP2, CD9, NTRK2, TMEM144,
-## CNTN2, SEMA3B, SNRPN, NEFH, F3, RASL12, CRLF1, CD14, SLC7A2, MSX1, BOK,
-## ZCCHC24, PLIN1, NECAB1, ITGB4, TAGLN2, ABCA2, IGFBP4, SUN2, FAM107B, LINC01094,
-## PLEC, ENPP2, GADD45A, STOM, SMAD9, TTYH2, KIAA0930, RPLP0, CD81, VWA1, SOX8,
-## ZFP36, AATK, MYRF, TSC22D1, CARNS1, BAG3, CLIC1, RDX, KCNMB4, TM4SF1, FCGR3A,
-## PRNP, RPL36, IL1RL1, NR2F2, SNHG5, MAP4, IFI16, FPR1, FYB1, RPL36A, SLC6A8,
-## ZBTB20, TYROBP, SOX10, PLTP, BEX3, RPS2, CLIC4, PFKFB2, B3GAT2, C1orf198,
-## RAMP3, FGFR2, KIT, ACTG1, NORAD, YBX3, HSPB8, CEBPD, EEF1G, PRDX6, FAM181B,
-## HYAL2, EEF1B2, FGF2, RPL8, SLAIN1, NCAN, ALDH6A1, HSPA8, SLC2A5, GSTM5, SEMA4D,
-## PFKFB3, CDKN1C, ENTPD2, GPR37, APP, AP2M1, TSPO, ANLN, H3F3B, MOG, ARRDC4,
-## GNAI2, MT1A, SLCO4A1, FADS2, ARHGAP5, SLC22A17, TPI1, RFX4, PACS2, NAMPT, PI16,
-## APOC2, C1orf122, SNHG8, SLC11A1, RPL27A, RHOC, HINT1, SLC16A9, MTRNR2L1,
-## SEPTIN2, GADD45B, TMIGD3, SIRT2, OTOS, EDN1, SCRG1, ADARB2, LRRC32, ENHO,
-## PHYHD1, GOLGA7, C1orf61, EVI2A, UBC, TIMP2, RIDA, FBLN1, KIF5C, DEPP1, COX4I1,
-## SOX18, ITPK1, CCL2, RPS10, GDI1, MYL12A, SNHG25, SYP, IER3, APOLD1, AIF1,
-## THBS1, PLCD3, FCGR1A, SLC44A2, ADGRV1, RPL3, IFITM1, FBXO2, RAMP2, SPON1, RHOU,
-## NOTCH3, SSR4, S100A13, TRIM47, TMED10, PRKCSH, CDC42EP1, DST, DDAH2, MTUS1,
-## PAX6, COTL1, SLCO1A2, ITGB1, HADHB, MLLT11, PFDN5, PLD3, LINC00320, COX6C,
-## ASCL1, VAMP2, SLC38A5, GSTP1, CFL2, GOT1, GLUD1, FADS1, FEZ1, FCER1G, MAP1A,
-## RAB6B, NOTCH2, KCTD12, MT-ND4, BGN, ECH1, MT1H, DPYSL3, SERF2, RFTN2, RPL18,
-## RHOA, EEF1A2, GNAL, GNG11, TMBIM6, LGALS3BP, CDK18, S100A1, CRIP1, CNDP1, UGT8,
-## SELENOW, RORB, PI4KA, RPL31, HADHA, ASPHD1, OFD1, CEBPB, EMP3, ANXA6, ATP6V1E1,
-## PLEKHH1, SHISA6, ADIPOR2, IFI27L2, PVALB, NUCKS1, SNHG29, CDC42EP4, CAPN3,
-## HES6, LY86, NFIX, SCIN, TMEM47, SLC9A3R2, ITPR2, MRVI1, COMT, SLC48A1, NFIB,
-## DLX6-AS1, ACSL1, PRR18, SERINC1, FAM89A, CCNI, EMX2OS, MAPK8IP1, PLAAT4,
-## HDAC11, CTSD, LITAF, DNAJB2, ANXA2, MIDN, CALY, PRRX1, CEND1, TMC6, RAB31,
-## RHBDD2, ALDH2, SEMA6A, NOP53, FMNL2, JUND, CDKN1A, UQCRH, PCSK1N, VIP, GMPR,
-## PAQR8, IRF2BP2, ROMO1, CA2, TUBB4A, RAPGEF4, ITM2C, VSIG4, CD63, SEPTIN7,
-## EMC10, EMP1, ZNF358, SCN1B, RGS12, PODXL, FAM167A, ATP5F1B, CPLX3, STARD7,
-## FIS1, PDLIM1, TNFRSF1A, S100A16, ALCAM, IFI30, CADM4, HNRNPH1, ZFAS1, PPP1R1B,
-## CFL1, ADCYAP1R1, UNC5B, MS4A6A, PENK, SYNGR2, RNF130, OLMALINC, OAF, CYBRD1,
-## NWD1, LINC01411, DNM2, CRTAP, MXI1, MXRA8, NEBL, SERPINH1, IL6ST, RAMP1, PRDX1,
-## NME2, PPIB, TMEM219, CAVIN1, ITGB2, HHATL, CIRBP, SLC3A2, TMEM165, GLS, DHCR24,
-## EPDR1, SLC20A2, RPL10A, CSF1, ALDH1A1, CAMKK1, LINC01578, TP53BP2, NDFIP1,
-## H2AFJ, PPP1R3C, CD151, LRRC8A, DDR2, MFSD2A, ST13, ANXA5, WASHC1, KCNE4,
-## SPTAN1, MGLL, MTCH1, PMVK, FAT1, FSCN1, ATP6V0E1, MOAP1, SYT4, HSPA5, EIF4B,
-## MYO6, SERBP1, PFN2, SAMHD1, NPTX2, PNRC1, SSPN, ICAM2, RPL27, POLR2F, PPFIA2,
-## AC009041.2, HES1, FLNA, CP, PIRT, GPT2, ANXA1, RHOB, ALOX5AP, PNP, IGFBP3,
-## NGEF, TTLL7, NAT8L, COX6A1, ALDH9A1, NFIC, PRKACB, DCTN1, SKP1, RPL23, FAIM2,
-## SAT1, OGFRL1, PJA2, ATP6V0E2, MSI2, NUDT4, FA2H, PECAM1, EIF4A1, SAP18, CAVIN2,
-## KRTCAP2, INSIG1, TECR, ADAMTS9, OAZ1, SARAF, APCDD1, SNTB1, RPL7, ELOVL5,
-## SELENOK, TMEM63A, FIBIN, MTHFD2, SPI1, HMG20B, EIF4EBP2, SEPTIN8, PNISR, ACOT7,
-## DCLK1, PHLDA3, ARGLU1, FUS, CAMK2D, UBL3, PREX2, SNTA1, ARHGAP21, VAMP3, NME4,
-## SAMD4B, HSPD1, KAT2B, NUDT3, SERPINB6, CD163, CLIP2, FGD5-AS1, HNRNPA3, GPI,
-## APBB1, SH3BGRL3, CLK1, DDIT4, DPP6, RALY, UHMK1, RELL1, PLIN3, UBAC1, ZNRF3,
-## MPST, UBA52, RNF141, SORBS1, DNM3, AK1, DPP7, PDE4B, LTBP3, ARL2, RAB5B, AMFR,
-## SOD1, FCGR2A, LUC7L3, ADCY8, SNHG32, FAM189A2, ELOVL1, MICOS13, DNAJB1, GTF3C6,
-## HAPLN2, PCDH9, OCIAD1, GABRA1, ATP5IF1, STX1A, FYN, ARHGEF26, PDLIM4, ETFB,
-## B4GAT1, CX3CR1, MCL1, COL16A1, ADCY2, SET, CTNNA1, KIF5A, PPP2R5C, CHST3, NME3,
-## LAPTM4A, BEX2, SEC11C, DNAJC6, SNHG9, NEDD8, RCAN2, RUFY3, NRN1, CTSH, NDUFAF8,
-## RPH3A, TOB2, LHX2, RAC1, NACA, HSPE1, ATP5F1E, SEC62, LMO2, SOCS3, ZNF536,
-## FNBP1, RTF2, MAP2, CDC42BPA, SOWAHA, HLA-DQB1, FAXDC2, HIF1A, HEPN1, AP2S1,
-## C4orf48, ZNF428, TIMM13, RPS6KA2, PITPNC1, CPLX1, ARL8A, PIM1, CD99L2, MAF1,
-## MIF, CCT7, GABRD, NOTCH1, RPS17, LARP7, LINC01896, CTNND2, ATP5MD, RTL8C,
-## PRKCA, SBF1, GAS7, PICALM, SPCS2, USF2, KIAA0408, KANK1, APC2, MARCKS, RPL35A,
-## CALR, VAT1L, HMGB1, PTPN11, WLS, SLC7A5, ARPC1B, EDF1, NAP1L4, NUAK1, SCLT1,
-## KPNB1, RASSF4, DAD1, AC068308.1, ARL6IP4, LCAT, PDZD2, RAB40B, SORBS3, MN1,
-## RAB11B, DYNC1H1, WASF1, PHACTR3, VEGFB, PRKCE, MACF1, AC245060.5, DAZAP2,
-## SPTLC2, GNG3, GAREM2, BACE1, EMID1, HNRNPF, PAK1, C12orf57, NDUFS7, ANK2,
-## MAPKAPK2, LIMK2, HSP90B1, RPL7A, CNTFR, NDUFAF3, MIAT, SLC25A48, OSBPL1A,
-## BMPR1B, B3GAT1, GABARAPL1, RAB3A, DDX3X, HDDC2, ZBTB16, SP1, SCG2, POLR2J,
-## BRK1, POLR2L, TRIM28, PCBP4, KLF13, TRIM22, RHOQ, DCXR, COPS9, COX16, FGFRL1,
-## HNRNPC, PGAM2, TLN1, LANCL1, LINC01354, YJEFN3, SELENOM, SEC61A1, ATRX, BRD7,
-## ZNHIT1, STK11, UBE2H, MPHOSPH8, GRN, SPX, TPP1, PLEKHA1, BSCL2, CD300A, PUF60,
-## GAS5, PIN1, DOHH, TCEAL3, LGI4, TYMP, S100A4, DDAH1, RPL15, BCAP31, PPP2CB,
-## RPL24, DYNLL2, GPC4, ATP6AP2, PDLIM3, MBD3, TPD52, TAF10, COX7C, SERINC3,
-## CTDSP1, DYSF, ICAM1, MOB1B, YWHAQ, INF2, RPL5, STUB1, BMP7, MSRB2, RGR, STAB1,
-## THRA, DDT, SERPINA1, MSMO1, MZT2B, JAM3, HNRNPM, APC, SLC39A12, TCEAL7, PEX5L,
-## GPBP1, SLC6A12, NGRN, NDUFB8, TALDO1, MMP24OS, PEA15, FAM50A, MAPK8IP3,
-## ATP5F1A, KIF1A, HNRNPA1, CERS2, RBM39, WDR13, FKBP8, MYL6, MYH9, USP53,
-## C1orf162, GRHPR, ZBTB47, HDGFL3, SLC25A23, NDUFS2, AZGP1, PCDHB4, RAPGEF3,
-## HNRNPUL1, MPPED1, CDK14, WDR6, MAZ, MOB1A, MORF4L2, EPS15, RIN2, RAP1GDS1,
-## MZT2A, GPR4, VPS51, MAST3, GAMT, BLOC1S1, NPTXR, GOLGA4, MICOS10, OST4, RPS26,
-## SEC11A, LSAMP, RPL6, MPRIP, BMERB1, SNRNP70, MAP7D1, SYT11, PSMD4, PHC2, FAM3C,
-## NDUFC2, ZFHX4, ACSS1, SLC18B1, INA, PALM, PRPF38B, PDE8B, HIPK1, APBA2, NBL1,
-## GRIA2, MT-ND3, C4orf3, DENND2A, ENSA, ATF4, AGAP3, PSMB5, TMEM151A, PLEKHG3,
-## HIGD1A, INSR, CHMP2A, CCDC124, CDK5R1, LDHB, ARRDC2, LMNA, SLC7A11, RNF11,
-## RAB8A, NXN, UFC1, PRKCZ, HMOX1, EIF3G, LDHA, BRI3, ARHGDIA, ACBD7, ELAVL3,
-## KLHL2, HES4, SERPING1, SELENON, TNS2, EGFL7, MGST3, WWTR1, CASC3, ENO1, MTMR10,
-## SMYD2, MEGF9, LPCAT2, DYNLRB1, SDF2L1, SCARA3, IDI1, TACC1, FKBP5, COL4A1,
-## POLR2E, ILF3, FKBP4, RPS7, COX5B, FAM102A, PLSCR4, NDUFS6, RHBDF2, ATP6V1A,
-## SCN3B, EEF2, CAST, TAOK1, ATP6V1H, IPCEF1, SIPA1, TRIP6, EIF3A, SRARP, DIPK2B,
-## ATP5MPL, EGLN3, WDR1, ANKH, MAT2A, NSG2, CPNE3, SFPQ, ARID5A, ATP2B2, TOMM20,
-## TNS3, TRIL, GRSF1, EPB41L3, GHITM, MBOAT2, TMEM147, MTSS2, COX7A2, PPIF, CD59,
-## YPEL3, CMTM6, FERMT2, TNFRSF1B, MS4A4A, HSPH1, SDF4, CD4, SYNM, BEX4, SNX6,
-## SYPL1, SPTBN1, ARL6IP1, TLE5, LAMTOR4, EIF3K, NHP2, RMDN3, RAB11FIP4, STMN3,
-## DDB1, TIPARP, GDE1, SCG3, MT-CYB, P2RY1, TMCO1, TM4SF18, PPP2R1A, ESAM, CALD1,
-## ACAA2, PDGFRA, TCEAL4, BAG1, CERS1, TYRO3, LINC01088, HIP1, PDIA4, SRSF3, GEM,
-## PAIP2, BRD2, SZRD1, COX7A1, STEAP3, PDXK, RO60, TMEFF2, SSBP3, CSDE1, BCL7C,
-## TNXB, STAT3, USP22, SFXN5, SECISBP2L, DHRS3, ARNT2, MXD4, GDA, WFS1, H2AFZ,
-## RAB21, RAB5A, PYGL, CDK2AP2, RBPJ, GPC1, HP1BP3, RBFOX1, KDELR2, CNTNAP2, TPM3,
-## ROCK1, DRAP1, CYB5R3, PNMA8A, GLTP, UBXN4, TGFBR2, MCRIP1, ITGB1BP1, RTKN,
-## SNX5, KIF3C, HNRNPUL2, GNG2, CXXC5, CAP1, CCDC50, PLEKHB2, HNMT, LIMS1, ZNF652,
-## TOMM7, PNCK, CSNK1A1, ATP5MC2, AKAP8L, PGK1, CD68, CA11, PCNP, EPN2, PRUNE2,
-## PLXNB2, ZFR, TMEM94, MLLT6, C18orf32, EML3, AASS, HAGH, TNS1, TOLLIP, GGT5,
-## PDP1, KIDINS220, CD24, RAD23A, HEPH, ATP13A4, TGIF1, ZNF106, ELOB, IFI6, IDH3A,
-## MAPK1, AARS, SELENOF, SEC61B, ERBB2, STAG2, SULT4A1, KCNN3, DMTN, TPD52L2,
-## PRMT2, LCP1, RBM5, APOL6, EPHB6, RYR1, RARRES2, BTBD3, PKIG, UBE2M, HIF3A,
-## ENOPH1, ATP9A, RBMS2, CHPT1, HMGN1, HCST, DHCR7, CAMK2G, SELENBP1, MAPK10,
-## HCLS1, PCMT1, ALPL, RAB5C, HLA-DMA, GPR137B, EHD2, MRTFB, PPDPF, TKT, GLG1,
-## P4HB, HNRNPL, PSEN1, ANP32A, PRKAR1A, CAPG, BDH2, ATP6V0B, NAP1L1, SNHG14,
-## NAV1, SEZ6L2, SRRM2, ARHGEF4, SGTA, SSR3, GABARAP, ALKBH7, SBDS, GPAA1, SV2A,
-## FLOT1, HNRNPK, KLK6, PARP1, VCP, HAPLN4, CTTN, PAICS, LIPA, AXL, ZNF24, TUBG2,
-## ALKBH5, LSM14A, TMEM178A, HOMER3, JTB</code></pre>
-<pre><code>## PC_ 1 
-## Positive:  MBP, PLP1, GFAP, CRYAB, CNP, SPP1, MOBP, DBNDD2, FTH1, TF 
-##     PTGDS, S100B, LINC00844, SCD, PPP1R14A, CLDND1, RPS12, SELENOP, QDPR, MAG 
-##     SEPTIN4, CLDN11, BCAS1, PTMA, FTL, APOD, PLEKHB1, EEF1A1, PAQR6, RPL37A 
-## Negative:  SNAP25, ENC1, NRGN, UCHL1, CHN1, VSNL1, TMSB10, TUBA1B, CALM3, RTN1 
-##     SYT1, CALM1, SLC17A7, YWHAH, GNAS, NEFL, OLFM1, THY1, MAP1B, DNM1 
-##     RTN3, CCK, GPM6A, HSP90AB1, TUBB2A, TSPAN7, STMN2, ENO2, BASP1, YWHAG 
-## PC_ 2 
-## Positive:  MBP, PLP1, SNAP25, TMSB10, DBNDD2, TUBA1B, CNP, QDPR, UCHL1, MOBP 
-##     STMN1, RTN1, RTN3, TF, FTH1, SYT1, CLDND1, CRYAB, MAP1B, CALM2 
-##     SEPTIN4, PPIA, MAG, PPP1R14A, APLP1, CLDN11, ENC1, THY1, VSNL1, BCAS1 
-## Negative:  MT-ND5, MTRNR2L12, MT-CO1, MTRNR2L8, SLC1A2, MT-ATP6, CST3, GLUL, MT-CO2, MT-ND4L 
-##     MT-CO3, MALAT1, MT-ATP8, SLC1A3, MT3, MT2A, AQP4, VIM, MT1E, GJA1 
-##     CPE, FAM107A, CLU, ATP1A2, CXCL14, MT1G, MT1M, AGT, MTRNR2L10, AHCYL1 
-## PC_ 3 
-## Positive:  MBP, MT-CO1, MT-CO3, MTRNR2L12, MT-ATP6, MT-CO2, MT-ND5, MTRNR2L8, MT-ND4L, MT-ATP8 
-##     HBB, HBA2, LINC00632, BCAS1, HBA1, MTRNR2L10, MOBP, MT-ND6, AL627171.2, MTURN 
-##     HIPK2, PAQR6, RPS21, RPL37, RPL37A, SNHG6, MAN1A2, RPS12, KIF1C, TP53INP2 
-## Negative:  CLU, SPARCL1, CPE, SLC1A2, PTGDS, GLUL, AQP4, CST3, SLC1A3, APOE 
-##     GJA1, AGT, PSAP, GAPDH, CKB, ITM2B, ENC1, VIM, SERPINA3, CRYAB 
-##     ATP1A2, PLPP3, DKK3, GFAP, GSN, ACTB, ATP1B2, GPRC5B, MT3, DPYSL2 
-## PC_ 4 
-## Positive:  MBP, PLP1, SLC1A2, GJA1, MOBP, GLUL, CNP, PTGDS, SLC1A3, MAG 
-##     SEPTIN4, PLPP3, ATP1A2, TF, TTYH1, GPR37L1, BCAS1, DBNDD2, ATP1B2, CLU 
-##     GJB6, OPALIN, HTRA1, SCD, MT-ATP6, CPE, HSPA2, ETNPPL, AGT, MT-CO1 
-## Negative:  HBB, HBA2, HBA1, TMSB10, TMSB4X, CD74, B2M, EEF1A1, CLDN5, A2M 
-##     TPT1, TAGLN, C1QB, HLA-B, RPLP1, SPP1, RPL41, HLA-DRA, C1QC, MYL9 
-##     GFAP, IFI27, FTL, C1QA, HLA-E, SRGN, RPS27, VWF, ACTB, SPARC 
-## PC_ 5 
-## Positive:  TMSB4X, MTRNR2L12, SPP1, MT-ND5, RPL41, EEF1A1, CD74, RPL37A, RPLP1, TMSB10 
-##     RPS27, FTL, MTRNR2L8, RPL34, RPL37, FTH1, C1QB, C1QC, GFAP, MT-CO1 
-##     RPS21, TPT1, RPS24, RPS28, RPL26, MT-CO3, RPS18, MT-CO2, RPL38, HLA-DRA 
-## Negative:  HBB, HBA2, HBA1, MBP, SLC1A2, PLP1, GJA1, SLC1A3, MALAT1, PTGDS 
-##     ATP1A2, PLPP3, GLUL, ATP1B2, FGFR3, AGT, CLU, AQP4, GJB6, CPE 
-##     MOBP, GPR37L1, CNP, CLDN10, GPX3, TTYH1, SNCG, LRIG1, HTRA1, PBXIP1</code></pre>
-<pre><code>## Computing nearest neighbor graph</code></pre>
-<pre><code>## Computing SNN</code></pre>
-<pre><code>## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
-## 
-## Number of nodes: 25293
-## Number of edges: 790692
-## 
-## Running Louvain algorithm...
-## Maximum modularity in 10 random starts: 0.8242
-## Number of communities: 12
-## Elapsed time: 4 seconds</code></pre>
-<pre><code>## Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
-## To use Python UMAP via reticulate, set umap.method to &#39;umap-learn&#39; and metric to &#39;correlation&#39;
-## This message will be shown once per session</code></pre>
-<pre><code>## 13:28:45 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 13:28:45 Read 25293 rows and found 30 numeric columns</code></pre>
-<pre><code>## 13:28:45 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 13:28:45 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
-<pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
-<pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
-<pre><code>## **************************************************|
-## 13:28:48 Writing NN index file to temp file /tmp/Rtmp9wYkrk/file126004ffc207f
-## 13:28:48 Searching Annoy index using 1 thread, search_k = 3000
-## 13:28:58 Annoy recall = 100%
-## 13:28:58 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-## 13:29:02 Initializing from normalized Laplacian + noise (using RSpectra)
-## 13:29:03 Commencing optimization for 200 epochs, with 1218032 positive edges
-## 13:29:15 Optimization finished</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb12-1" tabindex="-1"></a>ST011 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">RunPCA</span>(ST011, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb12-2" tabindex="-1"></a>ST011 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">FindNeighbors</span>(ST011, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)</span>
+<span id="cb12-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb12-3" tabindex="-1"></a>ST011 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">FindClusters</span>(ST011, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb12-4" tabindex="-1"></a>ST011 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">RunUMAP</span>(ST011, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)</span></code></pre></div>
 <p>Let’s plot the UMAP embedding of the voxels colored by the cluster assignment.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb28-1" tabindex="-1"></a><span class="co"># UMAP plot</span></span>
-<span id="cb28-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb28-2" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">DimPlot</span>(ST011, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">&quot;ident&quot;</span>), <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb28-3" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">DimPlot</span>(ST011, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">&quot;orig.ident&quot;</span>), <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;indianred&quot;</span>, <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;#BCD2EE&quot;</span>, <span class="st">&quot;lightskyblue3&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>), <span class="at">label =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb28-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, plot2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb13-1" tabindex="-1"></a><span class="co"># UMAP plot</span></span>
+<span id="cb13-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb13-2" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">DimPlot</span>(ST011, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">&quot;ident&quot;</span>), <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb13-3" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">DimPlot</span>(ST011, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">group.by =</span> <span class="fu">c</span>(<span class="st">&quot;orig.ident&quot;</span>), <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;indianred&quot;</span>, <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;firebrick&quot;</span>, <span class="st">&quot;#BCD2EE&quot;</span>, <span class="st">&quot;lightskyblue3&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>), <span class="at">label =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb13-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, plot2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
 <img src="_main_files/figure-html/unnamed-chunk-12-1.png" alt="UMAP merged slides" width="672" />
 <p class="caption">
@@ -376,8 +196,8 @@ Figure 2.1: UMAP merged slides
 </div>
 <p>Indeed, cell groups 9, 10 and 11 seems enriched in the AD slides. There is also an evident separation between control and AD cells in groups 2 and 5.</p>
 <p>Let’s now overlay the Groups over the slides.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb29-1" tabindex="-1"></a><span class="co"># Visualize Layers</span></span>
-<span id="cb29-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb29-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb14-1" tabindex="-1"></a><span class="co"># Visualize Layers</span></span>
+<span id="cb14-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb14-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">label.size =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
 <img src="_main_files/figure-html/unnamed-chunk-13-1.png" alt="Slides VS cell groups" width="672" />
 <p class="caption">
@@ -385,78 +205,78 @@ Figure 2.2: Slides VS cell groups
 </p>
 </div>
 <p>Let’s confirm that cell groups 9, 10 and 11 are indeed enriched in the AD slides by highlighting these cells over the slides.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-1" tabindex="-1"></a><span class="co"># group 9</span></span>
-<span id="cb30-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
-<span id="cb30-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
-<span id="cb30-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
-<span id="cb30-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
-<span id="cb30-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
-<span id="cb30-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
-<span id="cb30-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
-<span id="cb30-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb30-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb30-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-1" tabindex="-1"></a><span class="co"># group 9</span></span>
+<span id="cb15-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
+<span id="cb15-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
+<span id="cb15-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
+<span id="cb15-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
+<span id="cb15-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
+<span id="cb15-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
+<span id="cb15-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">9</span>),</span>
+<span id="cb15-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb15-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb15-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-14"></span>
 <img src="_main_files/figure-html/unnamed-chunk-14-1.png" alt="Cell Group 9 distribution" width="672" />
 <p class="caption">
 Figure 2.3: Cell Group 9 distribution
 </p>
 </div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-1" tabindex="-1"></a><span class="co"># group 10</span></span>
-<span id="cb31-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
-<span id="cb31-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
-<span id="cb31-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
-<span id="cb31-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
-<span id="cb31-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
-<span id="cb31-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
-<span id="cb31-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
-<span id="cb31-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb31-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb31-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-1" tabindex="-1"></a><span class="co"># group 10</span></span>
+<span id="cb16-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
+<span id="cb16-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
+<span id="cb16-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
+<span id="cb16-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
+<span id="cb16-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
+<span id="cb16-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
+<span id="cb16-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">10</span>),</span>
+<span id="cb16-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb16-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb16-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-15"></span>
 <img src="_main_files/figure-html/unnamed-chunk-15-1.png" alt="Cell Group 10 distribution" width="672" />
 <p class="caption">
 Figure 2.4: Cell Group 10 distribution
 </p>
 </div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-1" tabindex="-1"></a><span class="co"># group 11</span></span>
-<span id="cb32-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
-<span id="cb32-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
-<span id="cb32-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
-<span id="cb32-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
-<span id="cb32-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
-<span id="cb32-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
-<span id="cb32-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
-<span id="cb32-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb32-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb32-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-1" tabindex="-1"></a><span class="co"># group 11</span></span>
+<span id="cb17-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">1</span>],</span>
+<span id="cb17-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-3" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-4" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-5" tabindex="-1"></a>p2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">2</span>],</span>
+<span id="cb17-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-6" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-7" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-8"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-8" tabindex="-1"></a>p3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">3</span>],</span>
+<span id="cb17-9"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-9" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-10"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-10" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-11"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-11" tabindex="-1"></a>p4 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">4</span>],</span>
+<span id="cb17-12"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-12" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-13"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-13" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-14"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-14" tabindex="-1"></a>p5 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">5</span>],</span>
+<span id="cb17-15"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-15" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-16"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-16" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-17"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-17" tabindex="-1"></a>p6 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialDimPlot</span>(ST011, <span class="at">images =</span> <span class="fu">names</span>(ST011<span class="sc">@</span>images)[<span class="dv">6</span>],</span>
+<span id="cb17-18"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-18" tabindex="-1"></a>                            <span class="at">cells.highlight =</span> <span class="fu">CellsByIdentities</span>(<span class="at">object =</span> ST011, <span class="at">idents =</span> <span class="dv">11</span>),</span>
+<span id="cb17-19"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-19" tabindex="-1"></a>                            <span class="at">pt.size.factor =</span> <span class="dv">2000</span>) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb17-20"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb17-20" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(p1, p2, p3, p4, p5, p6, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-16"></span>
 <img src="_main_files/figure-html/unnamed-chunk-16-1.png" alt="Cell Group 11 distribution" width="672" />
 <p class="caption">
@@ -465,16 +285,16 @@ Figure 2.5: Cell Group 11 distribution
 </div>
 <p><a href="https://www.nature.com/articles/s41467-024-49133-z">Wang et al.</a> reports as most Differentially Expressed genes in AD vs control for these slides MTRNR2L1, MTRNR2L6, SERPINA3 and DEPP1.
 Let’s see the expression of these genes across the slides.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb33-1" tabindex="-1"></a><span class="co"># MTRNR2L1 and MTRNR2L6 expression</span></span>
-<span id="cb33-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb33-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;MTRNR2L1&quot;</span>, <span class="st">&quot;MTRNR2L6&quot;</span>), <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb18-1" tabindex="-1"></a><span class="co"># MTRNR2L1 and MTRNR2L6 expression</span></span>
+<span id="cb18-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb18-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;MTRNR2L1&quot;</span>, <span class="st">&quot;MTRNR2L6&quot;</span>), <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
 <img src="_main_files/figure-html/unnamed-chunk-17-1.png" alt="MTRNR2L1 and MTRNR2L6 expression" width="672" />
 <p class="caption">
 Figure 2.6: MTRNR2L1 and MTRNR2L6 expression
 </p>
 </div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb34-1" tabindex="-1"></a><span class="co"># DEPP1 and SERPINA3 expression</span></span>
-<span id="cb34-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb34-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;DEPP1&quot;</span>, <span class="st">&quot;SERPINA3&quot;</span>), <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb19-1" tabindex="-1"></a><span class="co"># DEPP1 and SERPINA3 expression</span></span>
+<span id="cb19-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb19-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;DEPP1&quot;</span>, <span class="st">&quot;SERPINA3&quot;</span>), <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-18"></span>
 <img src="_main_files/figure-html/unnamed-chunk-18-1.png" alt="DEPP1 and SERPINA3 expression" width="672" />
 <p class="caption">
@@ -486,21 +306,28 @@ Figure 2.7: DEPP1 and SERPINA3 expression
 <h2><span class="header-section-number">2.2</span> Identification of Spatially Variable Genes across groups<a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#identification-of-spatially-variable-genes-across-groups" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can also compute the most spatially variable genes across the slides using the <code>FindMarkers</code> function in Seurat.
 We can choose cell groups 2 and group 11 to see which markers are more differentially expressed across these two groups.</p>
-<pre><code>## Found 6 SCT models. Recorrecting SCT counts using minimum median counts: 6489</code></pre>
-<pre><code>##              used    (Mb) gc trigger    (Mb)   max used    (Mb)
-## Ncells    8304990   443.6   12129994   647.9   12129994   647.9
-## Vcells 1493117220 11391.6 2618080851 19974.4 2616140296 19959.6</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb20-1" tabindex="-1"></a>ST011 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">PrepSCTFindMarkers</span>(ST011)</span>
+<span id="cb20-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb20-2" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
 <p>Let’s plot the top 3 markers identified</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-1" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(</span>
-<span id="cb37-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-2" tabindex="-1"></a>    ST011,</span>
-<span id="cb37-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-3" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">rownames</span>(de_markers)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">alpha =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>),</span>
-<span id="cb37-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-4" tabindex="-1"></a>    <span class="at">pt.size.factor =</span> <span class="dv">2000</span>, <span class="at">ncol =</span> <span class="dv">6</span></span>
-<span id="cb37-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-5" tabindex="-1"></a>)</span>
-<span id="cb37-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb37-6" tabindex="-1"></a>p1</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-1" tabindex="-1"></a>de_markers <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">FindMarkers</span>(ST011, <span class="at">ident.1 =</span> <span class="dv">2</span>, <span class="at">ident.2 =</span> <span class="dv">11</span>)</span>
+<span id="cb21-2"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-2" tabindex="-1"></a>p1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(</span>
+<span id="cb21-3"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-3" tabindex="-1"></a>    ST011,</span>
+<span id="cb21-4"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-4" tabindex="-1"></a>    <span class="at">features =</span> <span class="fu">rownames</span>(de_markers)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">alpha =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>),</span>
+<span id="cb21-5"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-5" tabindex="-1"></a>    <span class="at">pt.size.factor =</span> <span class="dv">2000</span>, <span class="at">ncol =</span> <span class="dv">6</span></span>
+<span id="cb21-6"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-6" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb21-7" tabindex="-1"></a>p1</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
 <img src="_main_files/figure-html/unnamed-chunk-20-1.png" alt="Top 3 spatially variable markers" width="672" />
 <p class="caption">
 Figure 2.8: Top 3 spatially variable markers
+</p>
+</div>
+<p>Random graph, go!!!</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="dimensionality-reduction-and-exploration-of-the-merged-slides.html#cb22-1" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">DimHeatmap</span>(ST011)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<img src="_main_files/figure-html/unnamed-chunk-21-1.png" alt="Genes heatmap" width="1536" />
+<p class="caption">
+Figure 2.9: Genes heatmap
 </p>
 </div>
 
@@ -566,20 +393,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

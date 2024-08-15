@@ -11,18 +11,24 @@ mainDir = "/home/andrea/19ADC99/AD_spatial/"
 knitr::opts_knit$set(root.dir = mainDir)
 
 # load the merged Seurat object
-ST011 = readRDS("/home/andrea/Dump/AD_spatial/ST011.rds")
-allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.rds")
+#ST011 = qs::qread("/home/andrea/Dump/AD_spatial/ST011.qsave", nthreads = 6)
+#allen_MTG_reference = qs::qread("/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.qsave", nthreads = 6)
 ```
 
 
 # Transfer cell annotations from the Allen MTG reference to the AD slides.
 
 First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.
+We need to add SCT normalization to the Allen MTG reference, and then find the anchors. Since `SCTransform` requires the `counts` slot to be filled, we need to copy the `data` slot to the `counts` slot.  
 
-
+```{r, echo=TRUE, eval=FALSE}
 allen_MTG_reference[["RNA"]]$counts = allen_MTG_reference[["RNA"]]$data
 allen_MTG_reference = Seurat::SCTransform(allen_MTG_reference, verbose = TRUE)
+```
+
+
+
+qs::qsave(allen_MTG_reference, "/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.qsave", nthreads=8)
 
 anchors = Seurat::FindTransferAnchors(
     reference = allen_MTG_reference,

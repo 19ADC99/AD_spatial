@@ -11,7 +11,7 @@ mainDir = "/home/andrea/19ADC99/AD_spatial/"
 knitr::opts_knit$set(root.dir = mainDir)
 
 # load the merged Seurat object
-allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.rds")
+allen_MTG_reference = qs::qread("/home/andrea/Dump/AD_spatial/allen_MTG_reference.qsave", nthreads = 4)
 ```
 
 
@@ -19,20 +19,13 @@ The full Allen Brain Cell Atlas is an incredible resource, but it is so large th
 
 I have retrieve the MTG reference from the Allen Brain Cell Atlas from the [Seattle Alzheimer's Disease Brain Cell Atlas (SEA-AD)](https://portal.brain-map.org/atlases-and-data/rnaseq/human-mtg-10x_sea-ad). The Seurat object provided is much more maneageable (~4.4 Gb) and it contains targeted information to annotate our slides.
 
-Let's import the Atlas and run some dimensionality reduction on it, since the UMAP is available but not the PCA.
+Let's import the Atlas.
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=TRUE, eval=FALSE}
 # import
-allen_MTG_reference = readRDS("/home/andrea/Dump/AD_spatial/allen_MTG_reference.rds")
+allen_MTG_reference = qs::qread("/home/andrea/Dump/AD_spatial/allen_MTG_reference.qsave", nthreads = 4)
 
-# it comes without PCA, so we run it
-allen_MTG_reference = Seurat::FindVariableFeatures(allen_MTG_reference, selection.method = "vst", nfeatures = 2000)
-allen_MTG_reference = Seurat::ScaleData(allen_MTG_reference)
-allen_MTG_reference = Seurat::RunPCA(allen_MTG_reference, verbose = TRUE)
-allen_MTG_reference = Seurat::FindNeighbors(allen_MTG_reference, dims = 1:30)
-allen_MTG_reference = Seurat::FindClusters(allen_MTG_reference, verbose = TRUE)
 ```
-The clustering process identifies 127 communities, of them 90 are flagged as singletons resulting in 37 final cell clusters.
 
 Let's check the Atlas content.
 
@@ -40,6 +33,18 @@ Let's check the Atlas content.
 allen_MTG_reference
 ```
 
+We run some dimensionality reduction on it, since the UMAP is available but not the PCA.
+
+```{r, echo=TRUE, eval=FALSE}
+# it comes without PCA, so we run it
+allen_MTG_reference = Seurat::FindVariableFeatures(allen_MTG_reference, selection.method = "vst", nfeatures = 2000)
+allen_MTG_reference = Seurat::ScaleData(allen_MTG_reference)
+allen_MTG_reference = Seurat::RunPCA(allen_MTG_reference, verbose = TRUE)
+allen_MTG_reference = Seurat::FindNeighbors(allen_MTG_reference, dims = 1:30)
+allen_MTG_reference = Seurat::FindClusters(allen_MTG_reference, verbose = TRUE)
+```
+
+The clustering process identifies 127 communities, of them 90 are flagged as singletons resulting in 37 final cell clusters.
 We can also plot number of cells per Region of Interest and for each cell type.
 
 ```{r, fig.cap="Number of cells per Region of Interest", fig.height=9,  warning=FALSE, message=FALSE}

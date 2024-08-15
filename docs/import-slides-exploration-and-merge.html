@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 1 Import Slides, Exploration and Merge | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="/images/cover.png" />
+  
   <meta property="og:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
   <meta name="github-repo" content="19ADC99/AD_spatial" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 1 Import Slides, Exploration and Merge | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   
   <meta name="twitter:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
-  <meta name="twitter:image" content="/images/cover.png" />
+  
 
 <meta name="author" content="Andrea Del Cortona" />
 
@@ -154,19 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="load-and-prepare-the-allen-gtm-atlas.html"><a href="load-and-prepare-the-allen-gtm-atlas.html"><i class="fa fa-check"></i><b>3</b> Load and Prepare the Allen GTM Atlas</a></li>
 <li class="chapter" data-level="4" data-path="transfer-cell-annotations.html"><a href="transfer-cell-annotations.html"><i class="fa fa-check"></i><b>4</b> Transfer cell annotations</a></li>
 <li class="chapter" data-level="5" data-path="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><i class="fa fa-check"></i><b>5</b> Transfer cell annotations from the Allen MTG reference to the AD slides.</a></li>
-<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
-<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
-<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
-<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
-<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -194,8 +181,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The study by <a href="https://doi.org/10.1186/s40478-022-01494-6">Chen et al. 2022</a> provides a dataset of spatial transcriptomics data from the human middle temporal gyrus (MTG), an area vulnerable to Alzhaimer’s Disease. The study contains six slides, 3 from AD patients and 3 from healthy controls.</p>
 <p>The slides have been sequenced using 10X Genomics Visium technology and the raw data is available at the GEO accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44220">GSE220442</a>. We have decided to retrieve the data from the <a href="https://bmblx.bmi.osumc.edu/ssread/downloads">ssREAD database</a>.</p>
 <p>We will first import one slide to explore its content.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="import-slides-exploration-and-merge.html#cb1-1" tabindex="-1"></a>ST01101 <span class="ot">=</span> qs<span class="sc">::</span><span class="fu">qread</span>(<span class="st">&quot;/home/andrea/Dump/AD_spatial/ST011/ST01101.qsave&quot;</span>)</span></code></pre></div>
 <p>Let’s check the content</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="import-slides-exploration-and-merge.html#cb1-1" tabindex="-1"></a>ST01101</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="import-slides-exploration-and-merge.html#cb2-1" tabindex="-1"></a>ST01101</span></code></pre></div>
 <pre><code>## An object of class Seurat 
 ## 36601 features across 4701 samples within 1 assay 
 ## Active assay: Spatial (36601 features, 2000 variable features)
@@ -205,10 +193,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Very well, we have an object of class <code>Seurat</code> containing the spatial transcriptomics data of the first slide.
 The object contains expression data from 36,601 genes across 4701 spots.</p>
 <p>Let’s plot the expression of the genes next to the gene counts for each voxel in the slide.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="import-slides-exploration-and-merge.html#cb3-1" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">VlnPlot</span>(ST01101, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nCount_Spatial&quot;</span>)) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
-<span id="cb3-2"><a href="import-slides-exploration-and-merge.html#cb3-2" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST01101, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">0</span>)</span>
-<span id="cb3-3"><a href="import-slides-exploration-and-merge.html#cb3-3" tabindex="-1"></a>plot3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST01101, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span>
-<span id="cb3-4"><a href="import-slides-exploration-and-merge.html#cb3-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot2, plot3, <span class="at">ncol =</span> <span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="import-slides-exploration-and-merge.html#cb4-1" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">VlnPlot</span>(ST01101, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nCount_Spatial&quot;</span>)) <span class="sc">+</span> <span class="fu">NoLegend</span>()</span>
+<span id="cb4-2"><a href="import-slides-exploration-and-merge.html#cb4-2" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST01101, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">0</span>)</span>
+<span id="cb4-3"><a href="import-slides-exploration-and-merge.html#cb4-3" tabindex="-1"></a>plot3 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST01101, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span>
+<span id="cb4-4"><a href="import-slides-exploration-and-merge.html#cb4-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot2, plot3, <span class="at">ncol =</span> <span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
 <img src="_main_files/figure-html/unnamed-chunk-4-1.png" alt="Slide ST01101 overview" width="672" />
 <p class="caption">
@@ -221,18 +209,45 @@ Figure 1.1: Slide ST01101 overview
 <p>Now that we are familiar with the content of the first slide, let’s import them in batch and merge them into a single Seurat object.</p>
 <p>First, we import the slides into the list <code>ST011_list</code>. Each slide is also transfermed using the <code>Seurat::SCTransform</code> function.
 Since the images attached to each sample have all the same name, we also make sure that we change the <code>orig.ident</code> of each slide so that the images are not overwritten when we merge the slides together.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="import-slides-exploration-and-merge.html#cb5-1" tabindex="-1"></a>slides_names <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-2"><a href="import-slides-exploration-and-merge.html#cb5-2" tabindex="-1"></a>    <span class="at">slide =</span> <span class="fu">c</span>(<span class="st">&quot;ST01101&quot;</span>, <span class="st">&quot;ST01102&quot;</span>, <span class="st">&quot;ST01103&quot;</span>, <span class="st">&quot;ST01104&quot;</span>, <span class="st">&quot;ST01105&quot;</span>, <span class="st">&quot;ST01106&quot;</span>),</span>
+<span id="cb5-3"><a href="import-slides-exploration-and-merge.html#cb5-3" tabindex="-1"></a>    <span class="at">slide_name =</span> <span class="fu">c</span>(<span class="st">&quot;control1&quot;</span>, <span class="st">&quot;control2&quot;</span>, <span class="st">&quot;control3&quot;</span>, <span class="st">&quot;AD1&quot;</span>, <span class="st">&quot;AD2&quot;</span>, <span class="st">&quot;AD3&quot;</span>)</span>
+<span id="cb5-4"><a href="import-slides-exploration-and-merge.html#cb5-4" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="import-slides-exploration-and-merge.html#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="import-slides-exploration-and-merge.html#cb5-6" tabindex="-1"></a><span class="co"># load slides data</span></span>
+<span id="cb5-7"><a href="import-slides-exploration-and-merge.html#cb5-7" tabindex="-1"></a>ST011_list <span class="ot">=</span> <span class="fu">list</span>()</span>
+<span id="cb5-8"><a href="import-slides-exploration-and-merge.html#cb5-8" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>){</span>
+<span id="cb5-9"><a href="import-slides-exploration-and-merge.html#cb5-9" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="import-slides-exploration-and-merge.html#cb5-10" tabindex="-1"></a>    <span class="co"># get name</span></span>
+<span id="cb5-11"><a href="import-slides-exploration-and-merge.html#cb5-11" tabindex="-1"></a>    slide_name <span class="ot">=</span> slides_names<span class="sc">$</span>slide[k]</span>
+<span id="cb5-12"><a href="import-slides-exploration-and-merge.html#cb5-12" tabindex="-1"></a>    slide_type <span class="ot">=</span> slides_names<span class="sc">$</span>slide_name[k]</span>
+<span id="cb5-13"><a href="import-slides-exploration-and-merge.html#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="import-slides-exploration-and-merge.html#cb5-14" tabindex="-1"></a>    ST011_list[[slide_type]] <span class="ot">=</span> qs<span class="sc">::</span><span class="fu">qread</span>(<span class="fu">paste0</span>(<span class="st">&quot;/home/andrea/Dump/AD_spatial/ST011/ST0110&quot;</span>, k, <span class="st">&quot;.qsave&quot;</span>))</span>
+<span id="cb5-15"><a href="import-slides-exploration-and-merge.html#cb5-15" tabindex="-1"></a>    ST011_list[[slide_type]]<span class="sc">$</span>orig.ident <span class="ot">=</span> slide_type</span>
+<span id="cb5-16"><a href="import-slides-exploration-and-merge.html#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="import-slides-exploration-and-merge.html#cb5-17" tabindex="-1"></a>    <span class="co"># expression normalization</span></span>
+<span id="cb5-18"><a href="import-slides-exploration-and-merge.html#cb5-18" tabindex="-1"></a>    ST011_list[[slide_type]] <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SCTransform</span>(ST011_list[[slide_type]], <span class="at">assay =</span> <span class="st">&quot;Spatial&quot;</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-19"><a href="import-slides-exploration-and-merge.html#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="import-slides-exploration-and-merge.html#cb5-20" tabindex="-1"></a>    <span class="fu">gc</span>()</span>
+<span id="cb5-21"><a href="import-slides-exploration-and-merge.html#cb5-21" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="import-slides-exploration-and-merge.html#cb5-22" tabindex="-1"></a>}</span></code></pre></div>
 <p>Then, we merge the slides into a single Seurat object <code>ST011</code> and set the variable features to the union of the variable features of the individual slides.</p>
-<pre><code>## Warning: Some cell names are duplicated across objects provided. Renaming to
-## enforce unique cell names.</code></pre>
-<pre><code>## Warning: Key &#39;slice1_&#39; taken, using &#39;slice12_&#39; instead</code></pre>
-<pre><code>## Warning: Key &#39;slice1_&#39; taken, using &#39;slice13_&#39; instead</code></pre>
-<pre><code>## Warning: Key &#39;slice1_&#39; taken, using &#39;slice14_&#39; instead</code></pre>
-<pre><code>## Warning: Key &#39;slice1_&#39; taken, using &#39;slice15_&#39; instead</code></pre>
-<pre><code>## Warning: Key &#39;slice1_&#39; taken, using &#39;slice16_&#39; instead</code></pre>
-<pre><code>##              used   (Mb) gc trigger    (Mb)   max used    (Mb)
-## Ncells    8193308  437.6   12129994   647.9   12129994   647.9
-## Vcells 1242984455 9483.3 1817989480 13870.2 1735680646 13242.2</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="import-slides-exploration-and-merge.html#cb11-1" tabindex="-1"></a>ST011</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="import-slides-exploration-and-merge.html#cb6-1" tabindex="-1"></a><span class="co"># merge</span></span>
+<span id="cb6-2"><a href="import-slides-exploration-and-merge.html#cb6-2" tabindex="-1"></a>ST011 <span class="ot">=</span> <span class="fu">merge</span>(<span class="at">x =</span> ST011_list[[<span class="dv">1</span>]], <span class="at">y =</span> ST011_list[<span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(ST011_list)])</span>
+<span id="cb6-3"><a href="import-slides-exploration-and-merge.html#cb6-3" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011) <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb6-4"><a href="import-slides-exploration-and-merge.html#cb6-4" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">1</span>]]),</span>
+<span id="cb6-5"><a href="import-slides-exploration-and-merge.html#cb6-5" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">2</span>]]),</span>
+<span id="cb6-6"><a href="import-slides-exploration-and-merge.html#cb6-6" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">3</span>]]),</span>
+<span id="cb6-7"><a href="import-slides-exploration-and-merge.html#cb6-7" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">4</span>]]),</span>
+<span id="cb6-8"><a href="import-slides-exploration-and-merge.html#cb6-8" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">5</span>]]),</span>
+<span id="cb6-9"><a href="import-slides-exploration-and-merge.html#cb6-9" tabindex="-1"></a>    Seurat<span class="sc">::</span><span class="fu">VariableFeatures</span>(ST011_list[[<span class="dv">6</span>]])</span>
+<span id="cb6-10"><a href="import-slides-exploration-and-merge.html#cb6-10" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="import-slides-exploration-and-merge.html#cb6-11" tabindex="-1"></a><span class="fu">names</span>(ST011<span class="sc">@</span>images) <span class="ot">=</span> slides_names<span class="sc">$</span>slide_name</span>
+<span id="cb6-12"><a href="import-slides-exploration-and-merge.html#cb6-12" tabindex="-1"></a><span class="fu">gc</span>()</span></code></pre></div>
+<pre><code>##              used    (Mb) gc trigger    (Mb)   max used    (Mb)
+## Ncells   10353923   553.0   21679690  1157.9   21679690  1157.9
+## Vcells 4245183511 32388.2 7268408693 55453.6 6170889573 47080.2</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="import-slides-exploration-and-merge.html#cb8-1" tabindex="-1"></a>ST011</span></code></pre></div>
 <pre><code>## An object of class Seurat 
 ## 59009 features across 25293 samples within 2 assays 
 ## Active assay: SCT (22408 features, 18000 variable features)
@@ -240,11 +255,11 @@ Since the images attached to each sample have all the same name, we also make su
 ##  1 other assay present: Spatial
 ##  6 images present: control1, control2, control3, AD1, AD2, AD3</code></pre>
 <p>We can now plot the expression across clusters splitted by slide.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="import-slides-exploration-and-merge.html#cb13-1" tabindex="-1"></a><span class="co"># expression QC</span></span>
-<span id="cb13-2"><a href="import-slides-exploration-and-merge.html#cb13-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">VlnPlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nCount_Spatial&quot;</span>), <span class="at">split.by =</span> <span class="st">&quot;orig.ident&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="import-slides-exploration-and-merge.html#cb13-3" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;indianred&quot;</span>, <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;firebrick&quot;</span>,</span>
-<span id="cb13-4"><a href="import-slides-exploration-and-merge.html#cb13-4" tabindex="-1"></a>                                 <span class="st">&quot;#BCD2EE&quot;</span>, <span class="st">&quot;lightskyblue3&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="import-slides-exploration-and-merge.html#cb13-5" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="import-slides-exploration-and-merge.html#cb10-1" tabindex="-1"></a><span class="co"># expression QC</span></span>
+<span id="cb10-2"><a href="import-slides-exploration-and-merge.html#cb10-2" tabindex="-1"></a>Seurat<span class="sc">::</span><span class="fu">VlnPlot</span>(ST011, <span class="at">features =</span> <span class="fu">c</span>(<span class="st">&quot;nCount_Spatial&quot;</span>), <span class="at">split.by =</span> <span class="st">&quot;orig.ident&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="import-slides-exploration-and-merge.html#cb10-3" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;indianred&quot;</span>, <span class="st">&quot;brown2&quot;</span>, <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb10-4"><a href="import-slides-exploration-and-merge.html#cb10-4" tabindex="-1"></a>                                 <span class="st">&quot;#BCD2EE&quot;</span>, <span class="st">&quot;lightskyblue3&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="import-slides-exploration-and-merge.html#cb10-5" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-8"></span>
 <img src="_main_files/figure-html/unnamed-chunk-8-1.png" alt="Merged slides overview - Violin Plot" width="672" />
 <p class="caption">
@@ -253,10 +268,10 @@ Figure 1.2: Merged slides overview - Violin Plot
 </div>
 <p>We can immediatly notice how the control group have an higher cell counts and expression values for group 2 and 5, while the AD slides seems encriched in cells from group 9. Group 11 appear only in an AD slide.</p>
 <p>Let’s check as well how the gene counts are distributed across the six slides.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="import-slides-exploration-and-merge.html#cb14-1" tabindex="-1"></a><span class="co"># expression QC</span></span>
-<span id="cb14-2"><a href="import-slides-exploration-and-merge.html#cb14-2" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">0</span>)</span>
-<span id="cb14-3"><a href="import-slides-exploration-and-merge.html#cb14-3" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span>
-<span id="cb14-4"><a href="import-slides-exploration-and-merge.html#cb14-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, plot2, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="import-slides-exploration-and-merge.html#cb11-1" tabindex="-1"></a><span class="co"># expression QC</span></span>
+<span id="cb11-2"><a href="import-slides-exploration-and-merge.html#cb11-2" tabindex="-1"></a>plot1 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">0</span>)</span>
+<span id="cb11-3"><a href="import-slides-exploration-and-merge.html#cb11-3" tabindex="-1"></a>plot2 <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SpatialFeaturePlot</span>(ST011, <span class="at">features =</span> <span class="st">&quot;nCount_Spatial&quot;</span>, <span class="at">pt.size.factor =</span> <span class="dv">2000</span>)</span>
+<span id="cb11-4"><a href="import-slides-exploration-and-merge.html#cb11-4" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot1, plot2, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-9"></span>
 <img src="_main_files/figure-html/unnamed-chunk-9-1.png" alt="Merged slides overview - Slides expression" width="672" />
 <p class="caption">
@@ -327,20 +342,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

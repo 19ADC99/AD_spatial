@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 5 Transfer cell annotations from the Allen MTG reference to the AD slides. | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   <meta property="og:type" content="book" />
-  <meta property="og:image" content="/images/cover.png" />
+  
   <meta property="og:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
   <meta name="github-repo" content="19ADC99/AD_spatial" />
 
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Chapter 5 Transfer cell annotations from the Allen MTG reference to the AD slides. | Alzhaimer’s disease - A gentle introduction to spatial transcriptomics" />
   
   <meta name="twitter:description" content="Reprocessing of 10X Visium data from Chen et al. 2022 to learn the basics of spatial transcriptomics" />
-  <meta name="twitter:image" content="/images/cover.png" />
+  
 
 <meta name="author" content="Andrea Del Cortona" />
 
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="transfer-cell-annotations.html"/>
-<link rel="next" href="blocks.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -154,19 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="load-and-prepare-the-allen-gtm-atlas.html"><a href="load-and-prepare-the-allen-gtm-atlas.html"><i class="fa fa-check"></i><b>3</b> Load and Prepare the Allen GTM Atlas</a></li>
 <li class="chapter" data-level="4" data-path="transfer-cell-annotations.html"><a href="transfer-cell-annotations.html"><i class="fa fa-check"></i><b>4</b> Transfer cell annotations</a></li>
 <li class="chapter" data-level="5" data-path="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html"><i class="fa fa-check"></i><b>5</b> Transfer cell annotations from the Allen MTG reference to the AD slides.</a></li>
-<li class="chapter" data-level="6" data-path="blocks.html"><a href="blocks.html"><i class="fa fa-check"></i><b>6</b> Blocks</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="blocks.html"><a href="blocks.html#equations"><i class="fa fa-check"></i><b>6.1</b> Equations</a></li>
-<li class="chapter" data-level="6.2" data-path="blocks.html"><a href="blocks.html#theorems-and-proofs"><i class="fa fa-check"></i><b>6.2</b> Theorems and proofs</a></li>
-<li class="chapter" data-level="6.3" data-path="blocks.html"><a href="blocks.html#callout-blocks"><i class="fa fa-check"></i><b>6.3</b> Callout blocks</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="sharing-your-book.html"><a href="sharing-your-book.html"><i class="fa fa-check"></i><b>7</b> Sharing your book</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="sharing-your-book.html"><a href="sharing-your-book.html#publishing"><i class="fa fa-check"></i><b>7.1</b> Publishing</a></li>
-<li class="chapter" data-level="7.2" data-path="sharing-your-book.html"><a href="sharing-your-book.html#pages"><i class="fa fa-check"></i><b>7.2</b> 404 pages</a></li>
-<li class="chapter" data-level="7.3" data-path="sharing-your-book.html"><a href="sharing-your-book.html#metadata-for-sharing"><i class="fa fa-check"></i><b>7.3</b> Metadata for sharing</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -189,16 +176,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides." class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Transfer cell annotations from the Allen MTG reference to the AD slides.<a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html#transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides." class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.</p>
+<p>First step is to identify and transfer gene anchors between the Allen MTG reference and the AD slides.
+We need to add SCT normalization to the Allen MTG reference, and then find the anchors. Since <code>SCTransform</code> requires the <code>counts</code> slot to be filled, we need to copy the <code>data</code> slot to the <code>counts</code> slot.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html#cb29-1" tabindex="-1"></a>allen_MTG_reference[[<span class="st">&quot;RNA&quot;</span>]]<span class="sc">$</span>counts <span class="ot">=</span> allen_MTG_reference[[<span class="st">&quot;RNA&quot;</span>]]<span class="sc">$</span>data</span>
+<span id="cb29-2"><a href="transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides..html#cb29-2" tabindex="-1"></a>allen_MTG_reference <span class="ot">=</span> Seurat<span class="sc">::</span><span class="fu">SCTransform</span>(allen_MTG_reference, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>qs::qsave(allen_MTG_reference, “/home/andrea/Dump/AD_spatial/allen_MTG_reference.PCA.qsave”, nthreads=8)</p>
+<p>anchors = Seurat::FindTransferAnchors(
+reference = allen_MTG_reference,
+query = ST011,
+normalization.method = “SCT”,
+recompute.residuals = FALSE
+)</p>
 
 </div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="transfer-cell-annotations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="blocks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="transfer-cell-annotations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -252,20 +255,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

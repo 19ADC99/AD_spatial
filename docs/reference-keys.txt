@@ -9,10 +9,9 @@ fig:unnamed-chunk-16
 fig:unnamed-chunk-17
 fig:unnamed-chunk-18
 fig:unnamed-chunk-20
-fig:unnamed-chunk-24
-fig:unnamed-chunk-25
-eq:binom
-thm:tri
+fig:unnamed-chunk-21
+fig:unnamed-chunk-26
+fig:unnamed-chunk-27
 import-slides-exploration-and-merge
 import-the-first-slide
 import-all-slides-and-merge
@@ -22,11 +21,3 @@ identification-of-spatially-variable-genes-across-groups
 load-and-prepare-the-allen-gtm-atlas
 transfer-cell-annotations
 transfer-cell-annotations-from-the-allen-mtg-reference-to-the-ad-slides.
-blocks
-equations
-theorems-and-proofs
-callout-blocks
-sharing-your-book
-publishing
-pages
-metadata-for-sharing
